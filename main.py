@@ -4,9 +4,9 @@ import logging
 import asyncio
 import wikipedia
 from keyboards import buttons
+from dotenv import load_dotenv
+import os
 
-wikipedia.set_lang('uz')
-bot = Bot("5904607271:AAH-edy50mxak7BhgfeCB-9oLnlrK5QMPiM")
 dp = Dispatcher()
 
 @dp.startup()
@@ -15,7 +15,26 @@ async def startup_answer(bot: Bot):
 
 @dp.message(CommandStart())
 async def start(message: types.Message):
-    await message.answer(f"Salom {message.from_user.full_name}\nmen wikipedia bot\nmen maqola topishim uchun menga maqolaga oid bo'lgan mavzuni yuboring")
+    global msg
+    msg = await message.answer(f"Tilni tanlang | choose language | Выберите язык", reply_markup=buttons)
+
+@dp.callback_query()
+async def callback(call: types.CallbackQuery):
+    if call.data == "uz":
+        msg.delete()
+        wikipedia.set_lang("uz")
+        await call.message.answer("Salom {message.from_user.full_name}\nmen wikipedia bot\nmen maqola topishim uchun menga maqolaga oid bo'lgan mavzuni yuboring")
+        await bot.set_my_commands([types.BotCommand("start", "Botni ishga tushurish")])
+    elif call.data == "en":
+        msg.delete()
+        wikipedia.set_lang("en")
+        await call.message.answer("Hello {message.from_user.full_name}\nI'm wikipedia bot\nI can search for wikipedia articles")
+        await bot.set_my_commands([types.BotCommand("start", "start the bot")])
+    elif call.data == "ru":
+        msg.delete()
+        wikipedia.set_lang("ru")
+        await call.message.answer("Здравствуйте {message.from_user.full_name}\nя бот wikipedia\nя могу искать статьи в википедии")
+        await bot.set_my_commands([types.BotCommand("start", "начать бота")])
 
 @dp.message()
 async def function(message: types.Message):
@@ -29,6 +48,12 @@ async def shut_down(bot: Bot):
     await bot.send_message(5230484991, "Bot to'xtadi")
 
 async def main():
+    global bot
+
+    load_dotenv()
+    
+    bot = Bot(os.getenv("BOT_TOKEN"))
+
     await dp.start_polling(bot)
 
 
