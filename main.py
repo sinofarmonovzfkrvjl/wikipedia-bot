@@ -3,6 +3,7 @@ from aiogram.filters import CommandStart, Command
 import logging
 import asyncio
 import wikipedia
+from keyboards import buttons
 
 wikipedia.set_lang('uz')
 bot = Bot("5904607271:AAH-edy50mxak7BhgfeCB-9oLnlrK5QMPiM")
