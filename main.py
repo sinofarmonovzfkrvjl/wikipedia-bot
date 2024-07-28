@@ -21,16 +21,19 @@ async def start(message: types.Message):
 @dp.callback_query()
 async def callback(call: types.CallbackQuery):
     if call.data == "uz":
+        await call.answer(cache_time=60)
         msg.delete()
         wikipedia.set_lang("uz")
         await call.message.answer(f"Salom {call.message.from_user.full_name}\nmen wikipedia bot\nmen maqola topishim uchun menga maqolaga oid bo'lgan mavzuni yuboring")
         await bot.set_my_commands([types.BotCommand(command="start", description="Botni ishga tushurish")])
     elif call.data == "en":
+        await call.answer(cache_time=60)
         msg.delete()
         wikipedia.set_lang("en")
         await call.message.answer(f"Hello {call.message.from_user.full_name}\nI'm wikipedia bot\nI can search for wikipedia articles")
         await bot.set_my_commands([types.BotCommand(command="start", description="start the bot")])
     elif call.data == "ru":
+        await call.answer(cache_time=60)
         msg.delete()
         wikipedia.set_lang("ru")
         await call.message.answer(f"Здравствуйте {call.message.from_user.full_name}\nя бот wikipedia\nя могу искать статьи в википедии")
