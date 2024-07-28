@@ -11,7 +11,10 @@ dp = Dispatcher()
 
 @dp.startup()
 async def startup_answer(bot: Bot):
-    await bot.send_message(5230484991, "Bot ishga tushdi")
+    try:
+        await bot.send_message(5230484991, "Bot ishga tushdi")
+    except:
+        pass
 
 @dp.message(CommandStart())
 async def start(message: types.Message):
@@ -48,7 +51,10 @@ async def function(message: types.Message):
 TypeError
 @dp.shutdown()
 async def shut_down(bot: Bot):
-    await bot.send_message(5230484991, "Bot to'xtadi")
+    try:
+        await bot.send_message(5230484991, "Bot to'xtadi")
+    except:
+        pass
 
 async def main():
     global bot
