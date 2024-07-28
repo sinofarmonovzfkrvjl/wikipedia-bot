@@ -23,17 +23,17 @@ async def callback(call: types.CallbackQuery):
     if call.data == "uz":
         msg.delete()
         wikipedia.set_lang("uz")
-        await call.message.answer("Salom {message.from_user.full_name}\nmen wikipedia bot\nmen maqola topishim uchun menga maqolaga oid bo'lgan mavzuni yuboring")
+        await call.message.answer(f"Salom {call.message.from_user.full_name}\nmen wikipedia bot\nmen maqola topishim uchun menga maqolaga oid bo'lgan mavzuni yuboring")
         await bot.set_my_commands([types.BotCommand("start", "Botni ishga tushurish")])
     elif call.data == "en":
         msg.delete()
         wikipedia.set_lang("en")
-        await call.message.answer("Hello {message.from_user.full_name}\nI'm wikipedia bot\nI can search for wikipedia articles")
+        await call.message.answer(f"Hello {call.message.from_user.full_name}\nI'm wikipedia bot\nI can search for wikipedia articles")
         await bot.set_my_commands([types.BotCommand("start", "start the bot")])
     elif call.data == "ru":
         msg.delete()
         wikipedia.set_lang("ru")
-        await call.message.answer("Здравствуйте {message.from_user.full_name}\nя бот wikipedia\nя могу искать статьи в википедии")
+        await call.message.answer(f"Здравствуйте {call.message.from_user.full_name}\nя бот wikipedia\nя могу искать статьи в википедии")
         await bot.set_my_commands([types.BotCommand("start", "начать бота")])
 
 @dp.message()
@@ -51,7 +51,7 @@ async def main():
     global bot
 
     load_dotenv()
-    
+
     bot = Bot(os.getenv("BOT_TOKEN"))
 
     await dp.start_polling(bot)
